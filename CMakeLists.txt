@@ -4,6 +4,9 @@ project(QuantLib)
 
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/quantlib.cmake)
 
+option(BUILD_QL_EXAMPLES OFF)
+option(BUILD_QL_TESTSUITE OFF)
+
 option(BUILD_SHARED_LIBS "Build shared libraries" ${UNIX})
 option(USE_BOOST_DYNAMIC_LIBRARIES "Use the shared version of Boost libraries" ${UNIX})
 if (USE_BOOST_DYNAMIC_LIBRARIES)
@@ -44,8 +47,16 @@ if (Boost_FOUND)
 endif (Boost_FOUND)
 
 add_subdirectory(ql)
-add_subdirectory(Examples)
-add_subdirectory(test-suite)
+
+if (BUILD_QL_EXAMPLES)
+    message(STATUS "Building examples")
+    add_subdirectory(Examples)
+endif()
+
+if (BUILD_QL_TESTSUITE)
+    message(STATUS "Building test-suite")
+    add_subdirectory(test-suite)
+endif()
 
 #
 # Copy across the ANSI config file into the build directory. Users
