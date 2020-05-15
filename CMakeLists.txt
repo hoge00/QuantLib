@@ -4,16 +4,18 @@ project(QuantLib)
 
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/quantlib.cmake)
 
-option(BUILD_QL_EXAMPLES OFF)
-option(BUILD_QL_TESTSUITE OFF)
+option(BUILD_QL_EXAMPLES ON)
+option(BUILD_QL_TESTSUITE ON)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" ${UNIX})
-option(USE_BOOST_DYNAMIC_LIBRARIES "Use the shared version of Boost libraries" ${UNIX})
+option(USE_BOOST_DYNAMIC_LIBRARIES "Use the shared version of Boost libraries" OFF)
 if (USE_BOOST_DYNAMIC_LIBRARIES)
     add_definitions(-DBOOST_ALL_DYN_LINK)
 else()
     set(Boost_USE_STATIC_LIBS ON)
 endif()
+
+add_definitions(-DQL_USE_STD_UNIQUE_PTR)
 
 if (MSVC)
     set(MSVC_RUNTIME "dynamic" CACHE STRING "MSVC runtime to link")
